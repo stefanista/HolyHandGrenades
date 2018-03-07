@@ -1,59 +1,64 @@
-import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { LoggedinPage } from '../pages/loggedin/loggedin';
 import { RegisterPage } from '../pages/register/register';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { TabsPage } from '../pages/tabs/tabs';
+import { AboutPage } from '../pages/about/about';
+import { ContactPage } from '../pages/contact/contact';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 
 const firebaseAuth = {
-    apiKey: "AIzaSyDTw5NrP4zlUWoTnZrULefV670r2fHAo7c",
-    authDomain: "icp6-1624d.firebaseapp.com",
-    databaseURL: "https://icp6-1624d.firebaseio.com",
-    projectId: "icp6-1624d",
-    storageBucket: "icp6-1624d.appspot.com",
-    messagingSenderId: "522583751152"
+    apiKey: "AIzaSyBjyQenurH7RFfj9iOC34USGn6BWgdG6AI",
+    authDomain: "login-project-36e3f.firebaseapp.com",
+    databaseURL: "https://login-project-36e3f.firebaseio.com",
+    projectId: "login-project-36e3f",
+    storageBucket: "login-project-36e3f.appspot.com",
+    messagingSenderId: "596843832188"
   };
+
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
     HomePage,
-    TabsPage,
     LoginPage,
     RegisterPage,
-    LoggedinPage
+    LoggedinPage,
+    AboutPage,
+    ContactPage,
+    TabsPage
+    
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseAuth),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
     HomePage,
-    TabsPage,
     LoginPage,
     RegisterPage,
-    LoggedinPage
+    LoggedinPage,
+    AboutPage,
+    ContactPage,
+    TabsPage
+    
   ],
   providers: [
     StatusBar,
