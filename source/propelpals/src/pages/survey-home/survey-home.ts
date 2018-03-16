@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { SurveyARPage } from '../survey-ar/survey-ar';
+import { SurveyTextPage} from '../survey-text/survey-text';
 
 /**
  * Generated class for the SurveyHomePage page.
@@ -21,5 +23,15 @@ export class SurveyHomePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SurveyHomePage');
   }
+
+  navigateAR() {
+        this.navCtrl.push(SurveyARPage, {
+        });
+    }
+
+  navigateText() {
+        this.navCtrl.push(SurveyTextPage, {
+        });
+    }
 
 }

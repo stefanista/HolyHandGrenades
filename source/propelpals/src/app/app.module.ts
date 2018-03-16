@@ -14,6 +14,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { SurveyHomePage } from '../pages/survey-home/survey-home';
+import { SurveyARPage } from '../pages/survey-ar/survey-ar';
+import { SurveyTextPage } from '../pages/survey-text/survey-text';
 import { ChatPage} from '../pages/chat/chat';
 
 import { AngularFireModule } from 'angularfire2';
@@ -42,6 +44,8 @@ const firebaseAuth = {
     ContactPage,
     TabsPage,
     SurveyHomePage,
+    SurveyARPage,
+    SurveyTextPage,
     ChatPage
     
   ],
@@ -63,6 +67,8 @@ const firebaseAuth = {
     ContactPage,
     TabsPage,
     SurveyHomePage,
+    SurveyARPage,
+    SurveyTextPage,
     ChatPage
     
   ],
