@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { WelcomePage } from '../pages/welcome/welcome';
 import { LoginPage } from '../pages/login/login';
 import { LoggedinPage } from '../pages/loggedin/loggedin';
 import { RegisterPage } from '../pages/register/register';
@@ -34,7 +34,7 @@ const firebaseAuth = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    WelcomePage,
     LoginPage,
     RegisterPage,
     LoggedinPage,
@@ -55,7 +55,7 @@ const firebaseAuth = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
+    WelcomePage,
     LoginPage,
     RegisterPage,
     LoggedinPage,

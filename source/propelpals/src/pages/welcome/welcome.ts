@@ -6,9 +6,9 @@ import { RegisterPage } from '../register/register';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'welcome.html'
 })
-export class HomePage {
+export class WelcomePage {
 
     @ViewChild('username') uname;
     @ViewChild('password') password;
