@@ -4,7 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 
 /**
- * Generated class for the LoggedinPage page.
+ * Generated class for the HomePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,10 +12,10 @@ import firebase from 'firebase';
 
 @IonicPage()
 @Component({
-  selector: 'page-loggedin',
-  templateUrl: 'loggedin.html',
+  selector: 'page-home',
+  templateUrl: 'home.html',
 })
-export class LoggedinPage {
+export class HomePage {
 
     email: string;
     password: string;
@@ -30,7 +30,7 @@ export class LoggedinPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoggedinPage');
+    console.log('ionViewDidLoad HomePage');
     
     const personRef: firebase.database.Reference = firebase.database().ref('/'+ this.items[0] +'/');
     
