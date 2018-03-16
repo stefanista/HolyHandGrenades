@@ -13,6 +13,7 @@ import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
+import { SurveyHomePage } from '../pages/survey-home/survey-home';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -38,7 +39,8 @@ const firebaseAuth = {
     LoggedinPage,
     AboutPage,
     ContactPage,
-    TabsPage
+    TabsPage,
+    SurveyHomePage
     
   ],
   imports: [
@@ -57,7 +59,8 @@ const firebaseAuth = {
     LoggedinPage,
     AboutPage,
     ContactPage,
-    TabsPage
+    TabsPage,
+    SurveyHomePage
     
   ],
   providers: [
