@@ -46,17 +46,19 @@ export class SurveyHomePage {
  
     }
 
-      navigateAR() {
+  navigateAR(survey) {
         this.navCtrl.push(SurveyARPage, {
+          survey: survey
         });
     }
 
-  navigateText() {
+  navigateText(survey) {
         this.navCtrl.push(SurveyTextPage, {
+          survey: survey
         });
     }
 
-    getSurveys() {
+  getSurveys() {
         let loading = this.loadingCtrl.create({
             content: "Loading Surveys..."
         });
@@ -75,7 +77,7 @@ export class SurveyHomePage {
             });
     }
 
-    getActiveSurveys() {
+  getActiveSurveys() {
         let loading = this.loadingCtrl.create({
             content: "Loading Surveys..."
         });
@@ -96,13 +98,6 @@ export class SurveyHomePage {
                     loading.dismiss();
             }
         );
-    }
-
-    selectedSurvey(survey) {
-        //console.log(survey);
-        this.navCtrl.push(SurveyDetailsPage, {
-            survey: survey
-        });
     }
 
 }
