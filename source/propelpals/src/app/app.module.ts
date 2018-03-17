@@ -24,6 +24,8 @@ import { ChatPage} from '../pages/chat/chat';
 import { SurveyJS } from '../providers/survey/survey';
 import { ApiWrapper } from '../providers/survey/api-wrapper';
 
+import { SurveyComponent } from '../components/survey/survey';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -52,7 +54,8 @@ const firebaseAuth = {
     SurveyHomePage,
     SurveyARPage,
     SurveyTextPage,
-    ChatPage
+    ChatPage,
+    SurveyComponent
     
   ],
   imports: [
@@ -76,7 +79,7 @@ const firebaseAuth = {
     SurveyHomePage,
     SurveyARPage,
     SurveyTextPage,
-    ChatPage
+    ChatPage,
     
   ],
   providers: [
@@ -85,7 +88,8 @@ const firebaseAuth = {
     SurveyJS,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},
-    ApiWrapper
+    ApiWrapper,
+    HttpClientModule
   ]
 })
 export class AppModule {}
