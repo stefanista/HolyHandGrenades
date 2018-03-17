@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TimingInterceptor } from '../interceptors/timing-interceptor';
+
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
@@ -17,6 +20,9 @@ import { SurveyHomePage } from '../pages/survey-home/survey-home';
 import { SurveyARPage } from '../pages/survey-ar/survey-ar';
 import { SurveyTextPage } from '../pages/survey-text/survey-text';
 import { ChatPage} from '../pages/chat/chat';
+
+import { SurveyJS } from '../providers/survey/survey';
+import { ApiWrapper } from '../providers/survey/api-wrapper';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -54,7 +60,8 @@ const firebaseAuth = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseAuth),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -75,7 +82,10 @@ const firebaseAuth = {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    SurveyJS,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},
+    ApiWrapper
   ]
 })
 export class AppModule {}

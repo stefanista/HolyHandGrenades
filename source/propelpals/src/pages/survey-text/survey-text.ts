@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, AlertController } from 'ionic-angular';
+
+import { SurveyJS } from '../../providers/survey/survey';
+
+import { SurveyResultsModel } from '../../models/survey.results.model';
+
+import * as papa from 'papaparse';
 
 /**
  * Generated class for the SurveyTextPage page.
@@ -15,11 +21,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SurveyTextPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public surveyJS: SurveyJS,
+			  public loadingCtrl: LoadingController, public modalCtrl: ModalController, public alertCtrl: AlertController) {
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SurveyTextPage');
-  }
-
+  	ionViewDidLoad() {
+		//console.log('ionViewDidLoad SurveyResultsPage');
+	}
 }

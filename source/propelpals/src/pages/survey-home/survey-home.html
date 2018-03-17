@@ -15,11 +15,19 @@
 
 <ion-content padding>
     
-    <div passing>
-    
-        <button block ion-button (click)="navigateAR()">Surveys via AR</button>
-        <button block ion-button (click)="navigateText()">Surveys via Text</button>
-        
-    </div>
+    <h5>Active surveys</h5>
+    <ion-list>
+        <ion-item-sliding *ngFor="let survey of surveys; let i = index" #slidingItem>
+            <ion-item tappable (click)="selectedSurvey(survey)">
+                <h2>{{survey.Name}}</h2>
+                <p><ion-icon name="stopwatch"></ion-icon> {{survey.CreatedAt | date: 'dd/MM/yyyy H:mm'}}</p>
+                <div item-right>
+                  <button block ion-button small (click)="navigateAR(survey)">Respond via AR</button>
+                  <button block ion-button small (click)="navigateText(survey)">Respond via Text</button>
+                </div>
+                <!--<button ion-button clear item-end>View</button>-->
+            </ion-item>
+        </ion-item-sliding>
+    </ion-list>
 
 </ion-content>

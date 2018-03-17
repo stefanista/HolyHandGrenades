@@ -1,36 +1,107 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, LoadingController, NavParams, AlertController, ItemSliding } from 'ionic-angular';
+
+import { SurveyJS } from '../../providers/survey/survey';
 import { SurveyARPage } from '../survey-ar/survey-ar';
 import { SurveyTextPage} from '../survey-text/survey-text';
 
-/**
- * Generated class for the SurveyHomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { SurveyModel } from "../../models/survey.model";
 
-@IonicPage()
+import { ApiWrapper } from '../../providers/survey/api-wrapper';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
+
+
+
 @Component({
   selector: 'page-survey-home',
-  templateUrl: 'survey-home.html',
+  templateUrl: 'survey-home.html'
 })
 export class SurveyHomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    surveys: SurveyModel[];
+    archiveSurveys: SurveyModel[];
+    defaultImages: any;
+    noSurveys: boolean = false;
+    currentYear = new Date().getFullYear();
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SurveyHomePage');
-  }
+    constructor(public navCtrl: NavController, public surveyJS: SurveyJS,
+                public loadingCtrl: LoadingController, public alertCtrl: AlertController, public apiWrapper: ApiWrapper) {
+        //this.getActiveSurveys();
+        //this.getArchiveSurveys();
+        this.getSurveys();
 
-  navigateAR() {
+
+        // TO TEST API WRAPPER UNCOMMENT THIS CODE. 
+        
+        this.apiWrapper.api.surveys.get('getActive', { accessKey: true, ownerId: true }).subscribe(
+            data => {
+                console.log(data);
+            },
+            error => {
+                console.log(<any>error);
+            }
+        );
+        
+ 
+    }
+
+      navigateAR() {
         this.navCtrl.push(SurveyARPage, {
         });
     }
 
   navigateText() {
         this.navCtrl.push(SurveyTextPage, {
+        });
+    }
+
+    getSurveys() {
+        let loading = this.loadingCtrl.create({
+            content: "Loading Surveys..."
+        });
+        loading.present();
+        Observable.forkJoin(this.surveyJS.getActiveSurveys(), this.surveyJS.getArchiveSurveys())
+            .subscribe(data => {
+                //console.log(data);
+                this.surveys = SurveyModel.fromJSONArray(data[0]);
+                this.archiveSurveys = SurveyModel.fromJSONArray(data[1]);
+                loading.dismiss();
+            },
+            error => {
+                console.log(<any>error);
+                if ((error.message == "Failed to get surveys.") || (error.message == "Http failure response for (unknown url): 0 Unknown Error")) this.noSurveys = true;
+                loading.dismiss();
+            });
+    }
+
+    getActiveSurveys() {
+        let loading = this.loadingCtrl.create({
+            content: "Loading Surveys..."
+        });
+
+        loading.present();
+
+        this.surveyJS.getActiveSurveys()
+            .subscribe(
+                data => {
+                    //console.log(data);
+                    //this.surveys = data;
+                    this.surveys = SurveyModel.fromJSONArray(data);
+                    loading.dismiss();
+                },
+                error => {
+                    console.log(<any>error);
+                    if ((error.message == "Failed to get surveys.") || (error.message == "Http failure response for (unknown url): 0 Unknown Error")) this.noSurveys = true;
+                    loading.dismiss();
+            }
+        );
+    }
+
+    selectedSurvey(survey) {
+        //console.log(survey);
+        this.navCtrl.push(SurveyDetailsPage, {
+            survey: survey
         });
     }
 
