@@ -19,10 +19,11 @@ import { ContactPage } from '../pages/contact/contact';
 import { SurveyHomePage } from '../pages/survey-home/survey-home';
 import { SurveyARPage } from '../pages/survey-ar/survey-ar';
 import { SurveyTextPage } from '../pages/survey-text/survey-text';
+
 import { ChatsPage} from '../pages/chats/chats';
 import { GroupsPage } from '../pages/groups/groups';
 import { ProfilesPage } from '../pages/profiles/profiles';
-
+import { UserProvider } from '../providers/users/user';
 
 
 import { SurveyJS } from '../providers/survey/survey';
@@ -89,6 +90,7 @@ const firebaseAuth = {
   providers: [
     StatusBar,
     SplashScreen,
+    UserProvider,
     SurveyJS,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},

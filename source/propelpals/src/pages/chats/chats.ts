@@ -29,7 +29,7 @@ export class ChatsPage {
   
   }
   
-  loadProfile(){
+  addBuddy(){
   
     this.navCtrl.push(ProfilesPage);
   
