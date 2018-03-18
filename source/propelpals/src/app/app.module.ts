@@ -19,14 +19,27 @@ import { ContactPage } from '../pages/contact/contact';
 import { SurveyHomePage } from '../pages/survey-home/survey-home';
 import { SurveyARPage } from '../pages/survey-ar/survey-ar';
 import { SurveyTextPage } from '../pages/survey-text/survey-text';
-import { ChatPage} from '../pages/chat/chat';
+
+import { ChatsPage} from '../pages/chats/chats';
+import { GroupsPage } from '../pages/groups/groups';
+import { ProfilesPage } from '../pages/profiles/profiles';
+import { BuddychatPage } from '../pages/buddychat/buddychat';
+
+import { UserProvider } from '../providers/users/user';
+import { RequestsProvider } from '../providers/requests/requests';
+import { ChatProvider } from '../providers/chat/chat';
+
+import { File } from '@ionic-native/file';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
 
 import { SurveyJS } from '../providers/survey/survey';
 import { ApiWrapper } from '../providers/survey/api-wrapper';
-
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { ImghandlerProvider } from '../providers/imghandler/imghandler';
+
 
 
 const firebaseAuth = {
@@ -52,7 +65,10 @@ const firebaseAuth = {
     SurveyHomePage,
     SurveyARPage,
     SurveyTextPage,
-    ChatPage
+    ChatsPage,
+    GroupsPage,
+    ProfilesPage,
+    BuddychatPage
     
   ],
   imports: [
@@ -76,16 +92,23 @@ const firebaseAuth = {
     SurveyHomePage,
     SurveyARPage,
     SurveyTextPage,
-    ChatPage
+    ChatsPage,
+    GroupsPage,
+    ProfilesPage,
+    BuddychatPage
     
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    UserProvider,
     SurveyJS,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},
-    ApiWrapper
+    ApiWrapper,
+    RequestsProvider,
+    ChatProvider,
+    ImghandlerProvider
   ]
 })
 export class AppModule {}

@@ -44,13 +44,27 @@ export class RegisterPage {
   
   public usernames: Array<any> = [];
   
-  createPerson(firstName: string, lastName: string, username: string, password: string): void {
-  const personRef: firebase.database.Reference = firebase.database().ref('/' + password + '/');
-      personRef.set({ 
-        firstName, 
-        lastName,
-        username
-      })
+  createPerson(firstName: string, lastName: string, username: string, user: string): void {
+    const personRef: firebase.database.Reference = firebase.database().ref('/' + user + '/');
+        personRef.set({ 
+          firstName, 
+          lastName,
+          username,
+          photoURL: 'https://openclipart.org/download/247319/abstract-user-flat-3.svg'
+        })    
+  }
+
+  firedata = firebase.database().ref('/chatusers');
+
+  adduser(firstName: string, lastName: string, username: string, user: string): void {
+        this.firedata.child(this.fire.auth.currentUser.uid).set({
+            uid: this.fire.auth.currentUser.uid,
+            firstName, 
+            lastName,
+            username,
+            photoURL: 'https://openclipart.org/download/247319/abstract-user-flat-3.svg'
+          })
+    
   }
   
   registerUser() {
@@ -65,6 +79,7 @@ export class RegisterPage {
             this.usernames = this.user.value.split('@');
             
             this.createPerson(this.firstname.value, this.lastname.value, this.user.value, this.usernames[0]);
+            this.adduser(this.firstname.value, this.lastname.value, this.user.value, this.usernames[0]);
             this.alert('Registered!');
         })
         .catch(error =>{
@@ -72,9 +87,10 @@ export class RegisterPage {
             this.alert(error.message);
         });
 
-
-        console.log('Would register user with ', this.user.value, this.password.value);
     }
   }
+
+
+  
 
 }
