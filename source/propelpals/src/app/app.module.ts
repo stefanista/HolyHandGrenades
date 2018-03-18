@@ -23,15 +23,23 @@ import { SurveyTextPage } from '../pages/survey-text/survey-text';
 import { ChatsPage} from '../pages/chats/chats';
 import { GroupsPage } from '../pages/groups/groups';
 import { ProfilesPage } from '../pages/profiles/profiles';
-import { UserProvider } from '../providers/users/user';
+import { BuddychatPage } from '../pages/buddychat/buddychat';
 
+import { UserProvider } from '../providers/users/user';
+import { RequestsProvider } from '../providers/requests/requests';
+import { ChatProvider } from '../providers/chat/chat';
+
+import { File } from '@ionic-native/file';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
 
 import { SurveyJS } from '../providers/survey/survey';
 import { ApiWrapper } from '../providers/survey/api-wrapper';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { RequestsProvider } from '../providers/requests/requests';
+import { ImghandlerProvider } from '../providers/imghandler/imghandler';
+
 
 
 const firebaseAuth = {
@@ -59,7 +67,8 @@ const firebaseAuth = {
     SurveyTextPage,
     ChatsPage,
     GroupsPage,
-    ProfilesPage
+    ProfilesPage,
+    BuddychatPage
     
   ],
   imports: [
@@ -85,7 +94,8 @@ const firebaseAuth = {
     SurveyTextPage,
     ChatsPage,
     GroupsPage,
-    ProfilesPage
+    ProfilesPage,
+    BuddychatPage
     
   ],
   providers: [
@@ -96,7 +106,9 @@ const firebaseAuth = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},
     ApiWrapper,
-    RequestsProvider
+    RequestsProvider,
+    ChatProvider,
+    ImghandlerProvider
   ]
 })
 export class AppModule {}
