@@ -19,11 +19,14 @@ import { ContactPage } from '../pages/contact/contact';
 import { SurveyHomePage } from '../pages/survey-home/survey-home';
 import { SurveyARPage } from '../pages/survey-ar/survey-ar';
 import { SurveyTextPage } from '../pages/survey-text/survey-text';
-import { ChatPage} from '../pages/chat/chat';
+import { ChatsPage} from '../pages/chats/chats';
+import { GroupsPage } from '../pages/groups/groups';
+import { ProfilesPage } from '../pages/profiles/profiles';
+
+
 
 import { SurveyJS } from '../providers/survey/survey';
 import { ApiWrapper } from '../providers/survey/api-wrapper';
-
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -52,7 +55,9 @@ const firebaseAuth = {
     SurveyHomePage,
     SurveyARPage,
     SurveyTextPage,
-    ChatPage
+    ChatsPage,
+    GroupsPage,
+    ProfilesPage
     
   ],
   imports: [
@@ -76,7 +81,9 @@ const firebaseAuth = {
     SurveyHomePage,
     SurveyARPage,
     SurveyTextPage,
-    ChatPage
+    ChatsPage,
+    GroupsPage,
+    ProfilesPage
     
   ],
   providers: [
