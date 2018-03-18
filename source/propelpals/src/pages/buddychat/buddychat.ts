@@ -28,6 +28,7 @@ export class BuddychatPage {
       this.allmessages = [];
       this.zone.run(() => {
         this.allmessages = this.chatservice.buddymessages;
+        this.scrollto();
       })
       
       
