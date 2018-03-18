@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { UserProvider } from '../../providers/users/user';
+import { RequestsProvider } from '../../providers/requests/requests';
+import { connreq } from '../../models/interfaces/request';
+import firebase from 'firebase';
 
 
 
@@ -21,8 +24,11 @@ export class ProfilesPage {
   temparr = [];
   filteredusers = [];
   name : string;
+  newrequest = {} as connreq;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public userservice: UserProvider) {
+              public userservice: UserProvider, public alertCtrl: AlertController,
+    		  public requestservice: RequestsProvider) {
     this.userservice.getallusers().then((res: any) => {
       this.filteredusers = res;
       this.temparr = res;
@@ -47,6 +53,30 @@ export class ProfilesPage {
       }
       return false;
     })
+  }
+
+  sendreq(recipient) {
+    this.newrequest.sender = firebase.auth().currentUser.uid;
+    this.newrequest.recipient = recipient.uid;
+    if (this.newrequest.sender === this.newrequest.recipient)
+      alert('You are your friend always');
+    else {
+      let successalert = this.alertCtrl.create({
+        title: 'Request sent',
+        subTitle: 'Your request was sent to ' + recipient.firstName + ' ' + recipient.lastName,
+        buttons: ['ok']
+      });
+    
+      this.requestservice.sendrequest(this.newrequest).then((res: any) => {
+        if (res.success) {
+          successalert.present();
+          let sentuser = this.filteredusers.indexOf(recipient);
+          this.filteredusers.splice(sentuser, 1);
+        }
+      }).catch((err) => {
+        alert(err);
+      })
+    }
   }
 
 

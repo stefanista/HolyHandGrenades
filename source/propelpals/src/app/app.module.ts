@@ -31,6 +31,7 @@ import { ApiWrapper } from '../providers/survey/api-wrapper';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { RequestsProvider } from '../providers/requests/requests';
 
 
 const firebaseAuth = {
@@ -94,7 +95,8 @@ const firebaseAuth = {
     SurveyJS,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},
-    ApiWrapper
+    ApiWrapper,
+    RequestsProvider
   ]
 })
 export class AppModule {}
