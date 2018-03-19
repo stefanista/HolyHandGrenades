@@ -107,7 +107,7 @@ const firebaseAuth = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},
     ApiWrapper,
-    HttpClientModule
+    HttpClientModule,
     RequestsProvider,
     ChatProvider,
     ImghandlerProvider
