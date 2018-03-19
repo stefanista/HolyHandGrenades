@@ -18,7 +18,7 @@
     <h5>Active surveys</h5>
     <ion-list>
         <ion-item-sliding *ngFor="let survey of surveys; let i = index" #slidingItem>
-            <ion-item tappable (click)="selectedSurvey(survey)">
+            <ion-item>
                 <h2>{{survey.Name}}</h2>
                 <p><ion-icon name="stopwatch"></ion-icon> {{survey.CreatedAt | date: 'dd/MM/yyyy H:mm'}}</p>
                 <div item-right>

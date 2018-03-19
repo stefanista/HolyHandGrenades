@@ -46,6 +46,8 @@
     "papaparse": "^4.3.7",
     "rxjs": "5.5.2",
     "survey-angular": "^1.0.14",
+    "surveyjs-editor": "^1.0.14",
+    "surveyjs-widgets": "^1.0.14",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
   },
