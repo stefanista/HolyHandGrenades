@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TimingInterceptor } from '../interceptors/timing-interceptor';
@@ -111,6 +111,7 @@ const firebaseAuth = {
     RequestsProvider,
     ChatProvider,
     ImghandlerProvider
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
