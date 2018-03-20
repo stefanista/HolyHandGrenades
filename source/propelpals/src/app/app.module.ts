@@ -42,6 +42,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { ImghandlerProvider } from '../providers/imghandler/imghandler';
 
+import {ProfilePage} from  '../pages/profile/profile'
 
 
 const firebaseAuth = {
@@ -71,7 +72,9 @@ const firebaseAuth = {
     ChatsPage,
     GroupsPage,
     ProfilesPage,
-    BuddychatPage
+    BuddychatPage,
+    ProfilePage
+    
   ],
   imports: [
     BrowserModule,
@@ -97,7 +100,9 @@ const firebaseAuth = {
     ChatsPage,
     GroupsPage,
     ProfilesPage,
-    BuddychatPage
+    BuddychatPage,
+    ProfilePage
+    
   ],
   providers: [
     StatusBar,

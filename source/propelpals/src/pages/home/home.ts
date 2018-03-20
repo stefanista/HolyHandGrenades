@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
+import {ProfilePage} from  '../profile/profile';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 /**
  * Generated class for the HomePage page.
@@ -38,6 +40,10 @@ export class HomePage {
         this.myPerson = personSnapshot.val();
         return false;
     });
+  }
+  edit(){
+    this.navCtrl.setRoot( ProfilePage );
+  
   }
 
 }
