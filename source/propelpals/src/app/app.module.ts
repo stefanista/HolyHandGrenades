@@ -28,6 +28,7 @@ import { BuddychatPage } from '../pages/buddychat/buddychat';
 import { UserProvider } from '../providers/users/user';
 import { RequestsProvider } from '../providers/requests/requests';
 import { ChatProvider } from '../providers/chat/chat';
+import { HttpModule } from '@angular/http';
 
 import { File } from '@ionic-native/file';
 import { FileChooser } from '@ionic-native/file-chooser';
@@ -83,6 +84,7 @@ const firebaseAuth = {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     HttpClientModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -115,7 +117,8 @@ const firebaseAuth = {
     HttpClientModule,
     RequestsProvider,
     ChatProvider,
-    ImghandlerProvider
+    ImghandlerProvider,
+    FileChooser
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
