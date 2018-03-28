@@ -22,12 +22,15 @@ import { SurveyTextPage } from '../pages/survey-text/survey-text';
 
 import { ChatsPage} from '../pages/chats/chats';
 import { GroupsPage } from '../pages/groups/groups';
+import { NewgroupPage } from '../pages/newgroup/newgroup';
+
 import { ProfilesPage } from '../pages/profiles/profiles';
 import { BuddychatPage } from '../pages/buddychat/buddychat';
 
 import { UserProvider } from '../providers/users/user';
 import { RequestsProvider } from '../providers/requests/requests';
 import { ChatProvider } from '../providers/chat/chat';
+import { GroupsProvider } from '../providers/groups/groups';
 import { HttpModule } from '@angular/http';
 
 import { File } from '@ionic-native/file';
@@ -44,6 +47,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { ImghandlerProvider } from '../providers/imghandler/imghandler';
 
 import {ProfilePage} from  '../pages/profile/profile'
+
 
 
 const firebaseAuth = {
@@ -72,6 +76,7 @@ const firebaseAuth = {
     SurveyComponent,
     ChatsPage,
     GroupsPage,
+    NewgroupPage,
     ProfilesPage,
     BuddychatPage,
     ProfilePage
@@ -101,6 +106,7 @@ const firebaseAuth = {
     SurveyTextPage,
     ChatsPage,
     GroupsPage,
+    NewgroupPage,
     ProfilesPage,
     BuddychatPage,
     ProfilePage
@@ -118,7 +124,8 @@ const firebaseAuth = {
     RequestsProvider,
     ChatProvider,
     ImghandlerProvider,
-    FileChooser
+    FileChooser,
+    GroupsProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
