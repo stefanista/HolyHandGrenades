@@ -4,7 +4,6 @@ import firebase from 'firebase';
 
 /*
   Generated class for the GroupsProvider provider.
-
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
@@ -15,7 +14,6 @@ export class GroupsProvider {
   currentgroup: Array<any> = [];
   currentgroupname;
   grouppic;
-
   constructor(public events: Events) {
 
   }
@@ -62,6 +60,8 @@ export class GroupsProvider {
           for (var key in temp) {
             this.currentgroup.push(temp[key]);
           }
+          this.currentgroupname = groupname;
+         this.events.publish('gotintogroup');
         }
       })
     }
