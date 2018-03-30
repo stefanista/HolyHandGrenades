@@ -15,7 +15,6 @@ export class GroupsProvider {
   currentgroupname;
   grouppic;
   groupmsgs;
-
   constructor(public events: Events) {
 
   }
@@ -48,7 +47,7 @@ export class GroupsProvider {
           this.mygroups.push(newgroup);
         }
       }
-      this.events.publish('allmygroups');
+      this.events.publish('newgroup');
     })
     
   }
@@ -150,8 +149,8 @@ export class GroupsProvider {
           }).catch((err) => {
             reject(err);
           })
-        })
       })
+    })
     }) 
   }
 
@@ -176,13 +175,13 @@ export class GroupsProvider {
 
   addgroupmsg(newmessage) {
     return new Promise((resolve) => {
-   
+
+    
     this.firegroup.child(firebase.auth().currentUser.uid).child(this.currentgroupname).child('owner').once('value', (snapshot) => {
       var tempowner = snapshot.val();
       this.firegroup.child(firebase.auth().currentUser.uid).child(this.currentgroupname).child('msgboard').push({
         sentby: firebase.auth().currentUser.uid,
-        firstName: firebase.auth().currentUser.displayName,
-        lastName: firebase.auth().currentUser.displayName,
+        displayName: firebase.auth().currentUser.displayName,
         photoURL: firebase.auth().currentUser.photoURL,
         message: newmessage,
         timestamp: firebase.database.ServerValue.TIMESTAMP

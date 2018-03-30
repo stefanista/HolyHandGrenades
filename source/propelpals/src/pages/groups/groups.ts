@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController } from 'ionic-angular';
 import { GroupsProvider } from '../../providers/groups/groups';
+
 import { NewgroupPage } from '../newgroup/newgroup';
 
 /**
@@ -27,13 +28,13 @@ export class GroupsPage {
     loader.present();
     this.groupservice.getmygroups();
     loader.dismiss();
-    this.events.subscribe('allmygroups', () => {
+    this.events.subscribe('newgroup', () => {
       this.allmygroups = this.groupservice.mygroups;
     })
   }
 
   ionViewDidLeave() {
-    this.events.unsubscribe('allmygroups');
+    this.events.unsubscribe('newgroup');
   }
 
   addgroup() {
@@ -43,6 +44,7 @@ export class GroupsPage {
   openchat(group) {
     this.groupservice.getintogroup(group.groupName);
     this.navCtrl.push('GroupchatPage', { groupName: group.groupName });
+
   }
 
 }

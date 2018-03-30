@@ -16,6 +16,7 @@ import firebase from 'firebase';
   templateUrl: 'groupchat.html',
 })
 export class GroupchatPage {
+
   @ViewChild('content') content: Content;
   owner: boolean = false;
   groupName;
@@ -24,10 +25,11 @@ export class GroupchatPage {
   alignuid;
   photoURL;
   imgornot;
-  
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public groupservice: GroupsProvider,
-    		  public actionSheet: ActionSheetController, public events: Events, public imgstore: ImghandlerProvider, 
-    		  public loadingCtrl: LoadingController) {
+              public actionSheet: ActionSheetController, public events: Events, public imgstore: ImghandlerProvider, 
+              public loadingCtrl: LoadingController) {
+    
     this.alignuid = firebase.auth().currentUser.uid;
     this.photoURL = firebase.auth().currentUser.photoURL;
     this.groupName = this.navParams.get('groupName');
@@ -36,6 +38,7 @@ export class GroupchatPage {
         this.owner = true;  
     }).catch((err) => {
       alert(err);
+
       })
     this.groupservice.getgroupmsgs(this.groupName);
     this.events.subscribe('newgroupmsg', () => {
@@ -55,12 +58,12 @@ export class GroupchatPage {
         var formattedTime = monthNames[month] + "-" + da + "-" + hours + ":" + minutes.substr(-2);
 
         this.allgroupmsgs[key].timestamp = formattedTime;
-        if (this.allgroupmsgs[key].message.substring(0, 4) === 'http') {
+        /*if (this.allgroupmsgs[key].message.substring(0, 4) === 'http') {
           this.imgornot.push(true);
         }
         else {
           this.imgornot.push(false);
-        }
+        }*/
       }
       this.scrollto();
     })
@@ -71,22 +74,6 @@ export class GroupchatPage {
     console.log('ionViewDidLoad GroupchatPage');
   }
 
-  sendpicmsg() {
-    let loader = this.loadingCtrl.create({
-      content: 'Please wait'
-    });
-    loader.present();
-    this.imgstore.picmsgstore().then((imgurl) => {
-      loader.dismiss();
-      this.groupservice.addgroupmsg(imgurl).then(() => {
-        this.scrollto();
-        this.newmessage = '';
-      })
-    }).catch((err) => {
-      alert(err);
-      loader.dismiss();
-    })
-  }
 
   presentOwnerSheet() {
     let sheet = this.actionSheet.create({
@@ -183,6 +170,23 @@ export class GroupchatPage {
     setTimeout(() => {
       this.content.scrollToBottom();
     }, 1000);
+  }
+
+sendpicmsg() {
+    let loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+    loader.present();
+    this.imgstore.picmsgstore().then((imgurl) => {
+      loader.dismiss();
+      this.groupservice.addgroupmsg(imgurl).then(() => {
+        this.scrollto();
+        this.newmessage = '';
+      })
+    }).catch((err) => {
+      alert(err);
+      loader.dismiss();
+    })
   }
 
 }
