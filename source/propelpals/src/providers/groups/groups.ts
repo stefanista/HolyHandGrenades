@@ -10,6 +10,10 @@ import firebase from 'firebase';
 @Injectable()
 export class GroupsProvider {
   firegroup = firebase.database().ref('/groups');
+  fireusers = firebase.database().ref('/chatusers');
+  fireFirstName;
+  fireLastName;
+  firePhotoURL;
   mygroups: Array<any> = [];
   currentgroup: Array<any> = [];
   currentgroupname;
@@ -176,21 +180,31 @@ export class GroupsProvider {
   addgroupmsg(newmessage) {
     return new Promise((resolve) => {
 
+    this.fireusers.child(firebase.auth().currentUser.uid).child('firstName').once('value', (snapshot) => {
+      this.fireFirstName = snapshot.val(); })
+    this.fireusers.child(firebase.auth().currentUser.uid).child('lastName').once('value', (snapshot) => {
+      this.fireLastName = snapshot.val(); })
+    this.fireusers.child(firebase.auth().currentUser.uid).child('photoURL').on('value', (snapshot) => {
+      this.firePhotoURL = snapshot.val(); })
+
     
     this.firegroup.child(firebase.auth().currentUser.uid).child(this.currentgroupname).child('owner').once('value', (snapshot) => {
       var tempowner = snapshot.val();
+
       this.firegroup.child(firebase.auth().currentUser.uid).child(this.currentgroupname).child('msgboard').push({
         sentby: firebase.auth().currentUser.uid,
-        displayName: firebase.auth().currentUser.displayName,
-        photoURL: firebase.auth().currentUser.photoURL,
+        firstName: this.fireFirstName.toString(),
+        lastName: this.fireLastName.toString(),
+        photoURL: this.firePhotoURL.toString(),
         message: newmessage,
         timestamp: firebase.database.ServerValue.TIMESTAMP
       }).then(() => {
         if (tempowner != firebase.auth().currentUser.uid) {
           this.firegroup.child(tempowner).child(this.currentgroupname).child('msgboard').push({
             sentby: firebase.auth().currentUser.uid,
-            displayName: firebase.auth().currentUser.displayName,
-            photoURL: firebase.auth().currentUser.photoURL,
+            firstName: this.fireFirstName,
+            lastName: this.fireLastName,
+            photoURL: this.firePhotoURL,
             message: newmessage,
             timestamp: firebase.database.ServerValue.TIMESTAMP
           })
@@ -219,10 +233,21 @@ export class GroupsProvider {
   }
 
   postmsgs(member, msg, cb) {
+
+    this.fireusers.child(firebase.auth().currentUser.uid).child('firstName').once('value', (snapshot) => {
+      this.fireFirstName = snapshot.val(); })
+    this.fireusers.child(firebase.auth().currentUser.uid).child('lastName').once('value', (snapshot) => {
+      this.fireLastName = snapshot.val(); })
+    this.fireusers.child(firebase.auth().currentUser.uid).child('photoURL').on('value', (snapshot) => {
+      this.firePhotoURL = snapshot.val(); })
+
+
+
     this.firegroup.child(member.uid).child(this.currentgroupname).child('msgboard').push({
             sentby: firebase.auth().currentUser.uid,
-            displayName: firebase.auth().currentUser.displayName,
-            photoURL: firebase.auth().currentUser.photoURL,
+            firstName: this.fireFirstName.toString(),
+            lastName: this.fireLastName.toString(),
+            photoURL: this.firePhotoURL.toString(),
             message: msg,
             timestamp: firebase.database.ServerValue.TIMESTAMP
     }).then(() => {

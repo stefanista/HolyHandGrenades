@@ -65,7 +65,7 @@ export class GroupchatPage {
           this.imgornot.push(false);
         }*/
       }
-      this.scrollto();
+      //this.scrollto();
     })
 
   }
@@ -161,7 +161,7 @@ export class GroupchatPage {
 
   addgroupmsg() {
     this.groupservice.addgroupmsg(this.newmessage).then(() => {
-      this.scrollto();
+      //this.scrollto();
       this.newmessage = '';
     })
   }
