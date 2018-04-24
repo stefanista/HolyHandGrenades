@@ -6,14 +6,22 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content >
     
-    <p> Welcome to PropelPals </p>
+    <p class = "welcome"> Welcome to Propel Pals </p>
 
-
-    <div id="bottomButtons">
-        <button ion-button (click) = "signIn()">Sign In</button>
-        <button ion-button (click) = "register()">Register</button>
-    </div>
+    <ion-grid>
+      <ion-row>
+    
+        <ion-col width-50>
+          <button ion-button block (click) = "signIn()">Sign In</button>
+        </ion-col>
+        <ion-col width-50>
+          <button ion-button block (click) = "register()">Register</button>
+        </ion-col>
+      </ion-row>
+      
+    </ion-grid>
+ 
     
 </ion-content>
