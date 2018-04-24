@@ -30,9 +30,6 @@ export class SurveyHomePage {
         //this.getActiveSurveys();
         //this.getArchiveSurveys();
         this.getSurveys();
-
-
-        // TO TEST API WRAPPER UNCOMMENT THIS CODE. 
         
         this.apiWrapper.api.surveys.get('getActive', { accessKey: true, ownerId: true }).subscribe(
             data => {
