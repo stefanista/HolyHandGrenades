@@ -28,8 +28,8 @@ export class SurveyTextPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public surveyJS: SurveyJS,
         public loadingCtrl: LoadingController, public modalCtrl: ModalController, public alertCtrl: AlertController) {
 
-          this.survey = this.navParams.get('survey');
-          this.survey.publicSurveyURL = 'https://surveyjs.io/Results/Survey/' + this.survey.Id;
+    this.survey = this.navParams.get('survey');
+    this.survey.publicSurveyURL = 'https://surveyjs.io/Results/Survey/' + this.survey.Id;
   }
 
   	ionViewDidLoad() {

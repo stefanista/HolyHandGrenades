@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 import * as Survey from 'survey-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import firebase from 'firebase';
+
 
 /**
  * Generated class for the SurveyComponent component.
@@ -13,7 +16,7 @@ import * as Survey from 'survey-angular';
     templateUrl: 'survey.html'
 })
 export class SurveyComponent {
-
+    firedata = firebase.database().ref('/surveys');
     _survey: any;
 
     @Input() set survey(survey) {
@@ -26,22 +29,26 @@ export class SurveyComponent {
         // Progress Bar.
         surveyModel.showProgressBar = 'bottom';
 
-        surveyModel.onComplete.add(this.sendDataToServer.bind(this));
-        Survey.SurveyNG.render('surveyElement', { model: surveyModel });
+        surveyModel.onComplete.add(this.sendDataToServerAndFirebase.bind(this));
 
+        Survey.SurveyNG.render('surveyElement', { model: surveyModel });
     }
 
-    constructor() {
+    constructor(private fire: AngularFireAuth) {
     }
 
     ionViewDidLoad() {
     }
 
-    sendDataToServer(survey) {
+    sendDataToServerAndFirebase(survey) {
         //console.log("sendDataToServer");
         //console.log("postId", this._survey.PostId);
         survey.sendResult(this._survey.PostId);
-    };
 
+        //save data to firebase
+        this.firedata.child(this.fire.auth.currentUser.uid).child(this._survey.id).set({
+            surveyID: this._survey.id
+        })
+    };
 
 }
