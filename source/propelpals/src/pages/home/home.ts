@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 import {ProfilePage} from  '../profile/profile';
 import { AngularFireDatabase } from 'angularfire2/database';
-
+import { Profile } from '../../models/profile';
 /**
  * Generated class for the HomePage page.
  *
@@ -19,31 +19,63 @@ import { AngularFireDatabase } from 'angularfire2/database';
 })
 export class HomePage {
 
-    email: string;
-    password: string;
-    public items: Array<any> = [];
-    public myPerson: object = {};
-
-  constructor( private fire: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  public items: Array<any> = [];
+  public itemRef: firebase.database.Reference;
+  public link: string;
   
-    this.email = fire.auth.currentUser.email;
-    this.items = this.email.split('@');
   
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    constructor( private afDatabase: AngularFireDatabase,private afAuth: AngularFireAuth,
+      private toast:ToastController,
+      public navCtrl: NavController, public navParams: NavParams) {
+  
+        this.afAuth.authState.take(1).subscribe(data =>{
+          this.itemRef= firebase.database().ref(`/chatusers/${data.uid}`);
+        })
+  
+      }
+       
     
-    const personRef: firebase.database.Reference = firebase.database().ref('/'+ this.items[0] +'/');
+  
+    ionViewDidLoad() {
+      // console.log('ionViewDidLoad HomePage');
+      this.itemRef.on('value', itemSnapshot => {
+     
+        this.items = [];
+        itemSnapshot.forEach( itemSnap => {
+          this.items.push(itemSnap.val());
+          return false;
+        });
+  
+        if (this.items[6]=='Student'){
+          this.toast.create({
+                  message:`Hello! Student`,
+                  duration:6000
+                }).present();
+          this.link="https://cdn1.iconfinder.com/data/icons/education-1-15/151/26-512.png"
+        }
+        else  if (this.items[6]=='Teacher'){
+          this.toast.create({
+            message:`Hello! Teacher`,
+            duration:6000
+          }).present();
+          this.link="https://cdn4.iconfinder.com/data/icons/fun-colorful-academic/700/Instructor_Icon_-_Illustration-512.png"
+        }
+        else {
+          this.toast.create({
+            message:`Hello! Mentor`,
+            duration:6000
+          }).present();
+          this.link="https://www.naturalwellnessacademy.org/wp-content/uploads/2017/07/mentor-teacher-instructor-icon.png"
+        }
+      })
+      
     
-    personRef.on('value', personSnapshot => {
-        this.myPerson = personSnapshot.val();
-        return false;
-    });
-  }
-  edit(){
-    this.navCtrl.setRoot( ProfilePage );
+  
+    }
+    edit(){
+      this.navCtrl.setRoot( ProfilePage );
+    
+    }
   
   }
-
-}
+  
