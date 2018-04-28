@@ -24,7 +24,7 @@ export class SurveyComponent {
         Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
 
         this._survey = survey;
-        let surveyModel = new Survey.ReactSurveyModel({ surveyId: this._survey.Id });
+        let surveyModel = new Survey.Model({ surveyId: this._survey.Id });
 
         // Progress Bar.
         surveyModel.showProgressBar = 'bottom';
@@ -46,9 +46,20 @@ export class SurveyComponent {
         survey.sendResult(this._survey.PostId);
 
         //save data to firebase
-        this.firedata.child(this.fire.auth.currentUser.uid).child(this._survey.id).set({
-            surveyID: this._survey.id
-        })
+        this.addUserSurvey(this._survey);
     };
+
+    addUserSurvey(survey) {
+        var promise = new Promise((resolve, reject) => {
+        this.firedata.child(this.fire.auth.currentUser.uid).child(survey.Id).set({
+            completed: true,
+          }).then(() => {
+            resolve(true);
+            }).catch((err) => {
+              reject(err);
+          })
+        });
+        return promise;
+      }
 
 }
