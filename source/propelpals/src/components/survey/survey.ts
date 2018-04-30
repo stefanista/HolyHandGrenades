@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 import * as Survey from 'survey-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import firebase from 'firebase';
+
 
 /**
  * Generated class for the SurveyComponent component.
@@ -13,7 +16,7 @@ import * as Survey from 'survey-angular';
     templateUrl: 'survey.html'
 })
 export class SurveyComponent {
-
+    firedata = firebase.database().ref('/surveys');
     _survey: any;
 
     @Input() set survey(survey) {
@@ -21,27 +24,42 @@ export class SurveyComponent {
         Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
 
         this._survey = survey;
-        let surveyModel = new Survey.ReactSurveyModel({ surveyId: this._survey.Id });
+        let surveyModel = new Survey.Model({ surveyId: this._survey.Id });
 
         // Progress Bar.
         surveyModel.showProgressBar = 'bottom';
 
-        surveyModel.onComplete.add(this.sendDataToServer.bind(this));
-        Survey.SurveyNG.render('surveyElement', { model: surveyModel });
+        surveyModel.onComplete.add(this.sendDataToServerAndFirebase.bind(this));
 
+        Survey.SurveyNG.render('surveyElement', { model: surveyModel });
     }
 
-    constructor() {
+    constructor(private fire: AngularFireAuth) {
     }
 
     ionViewDidLoad() {
     }
 
-    sendDataToServer(survey) {
+    sendDataToServerAndFirebase(survey) {
         //console.log("sendDataToServer");
         //console.log("postId", this._survey.PostId);
         survey.sendResult(this._survey.PostId);
+
+        //save data to firebase
+        this.addUserSurvey(this._survey);
     };
 
+    addUserSurvey(survey) {
+        var promise = new Promise((resolve, reject) => {
+        this.firedata.child(this.fire.auth.currentUser.uid).child(survey.Id).set({
+            completed: true,
+          }).then(() => {
+            resolve(true);
+            }).catch((err) => {
+              reject(err);
+          })
+        });
+        return promise;
+      }
 
 }

@@ -4,6 +4,12 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+<script src="../../../www/aframe/aframe.js/aframe-animation-component.js"></script>
+<script src="../../../www/aframe/aframe.js/aframe-event-set-component.js"></script>
+<script src="../../../www/aframe/aframe.js/saframe-layout-component.js"></script>
+<script src="../../../www/aframe/aframe.js/aframe-template-component.js"></script>
+
+<script src="pages/survey-ar/components/set-image.js"></script>
 
 <ion-header>
 
@@ -14,11 +20,21 @@
 </ion-header>
 
 <ion-content padding>
-  <a-scene>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" width="1" height="1" depth="1" color="#4CC3D9"></a-box>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
+
+  <survey [survey]="survey"></survey>
+
+  <a-scene embedded background="transparent: true">
+    <a-assets>
+    </a-assets>
+    <!-- Camera + cursor. -->
+    <a-entity camera look-controls>
+      <a-cursor id="cursor"
+        animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+        animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+        event-set__1="_event: mouseenter; color: springgreen"
+        event-set__2="_event: mouseleave; color: black"
+        fuse="true"
+        raycaster="objects: .link"></a-cursor>
+    </a-entity>
   </a-scene>
 </ion-content>
