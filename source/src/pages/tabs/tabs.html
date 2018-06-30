@@ -1,6 +1,7 @@
 <ion-tabs>
-    <ion-tab [root]="homeRoot" tabTitle="Home" tabIcon="home"></ion-tab>
-    <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="chatboxes"></ion-tab>
-    <ion-tab [root]="surveysRoot" tabTitle="Surveys" tabIcon="clipboard"></ion-tab>
-    <ion-tab [root]="contactRoot" tabTitle="Contact" tabIcon="contact"></ion-tab>
+    <ion-tab [tabsHideOnSubPages]="true" [root]="homeRoot" tabTitle="Home" tabIcon="home"></ion-tab>
+    <ion-tab [tabsHideOnSubPages]="true" [root]="chatRoot" tabTitle="Chat" tabIcon="chatboxes"></ion-tab>
+    <ion-tab [tabsHideOnSubPages]="true" [root]="channelsRoot" tabTitle="Channel" tabIcon="chatbubbles"></ion-tab>
+    <ion-tab [tabsHideOnSubPages]="true" [root]="surveysRoot" tabTitle="Surveys" tabIcon="clipboard"></ion-tab>
+    <ion-tab [tabsHideOnSubPages]="true" [root]="contactRoot" tabTitle="Contact" tabIcon="contact"></ion-tab>
 </ion-tabs>

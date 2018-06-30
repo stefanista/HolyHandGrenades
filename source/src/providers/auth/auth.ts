@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase/app';
+import { Account } from '../../models/account/account.interface';
+import { LoginResponse } from '../../models/login/login-response.interface';
 
 @Injectable()
 export class AuthProvider {
@@ -25,6 +27,22 @@ export class AuthProvider {
 
   signOutUser(): Promise<void> {
     return this.afAuth.auth.signOut();
+  }
+
+  getAuthenticatedUser(){
+    return this.afAuth.authState;
+  }
+
+  async signInWithEmailAndPassword(account: Account) {
+    try {
+      return <LoginResponse> {
+        result: await this.afAuth.auth.signInWithEmailAndPassword(account.email, account.password)
+      };
+    } catch(e) {
+      return <LoginResponse> {
+        error: e
+      };
+    }
   }
 
 }

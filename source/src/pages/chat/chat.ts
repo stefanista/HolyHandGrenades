@@ -1,25 +1,24 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ChatPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { MESSAGE_LIST } from '../../mocks/messages/messages';
+import { Message } from '../../models/messages/message.interface';
 
 @IonicPage()
 @Component({
-  selector: 'page-chat',
+  selector: 'page-chat-page',
   templateUrl: 'chat.html',
 })
 export class ChatPage {
+
+  messageList : Message[] = MESSAGE_LIST;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
+    console.log(this.messageList);
   }
-
+  navigateToSearchUserPage() {
+    this.navCtrl.push('SearchUserPage');
+  }
 }

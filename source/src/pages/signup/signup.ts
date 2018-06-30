@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { ToastController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
+import { EditProfilePage } from '../../pages/edit-profile-page/edit-profile-page';
 
 /**
  * Generated class for the SignupPage page.
@@ -66,6 +67,8 @@ export class SignupPage {
         (error) => {
           this.createToast(error.message).present();
         })
+
+      this.navCtrl.push(EditProfilePage);
     }
   }
 
