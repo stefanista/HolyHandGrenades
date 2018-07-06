@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase/app';
-import { Account } from '../../models/account/account.interface';
+import { Profile } from '../../models/profile/profile.interface';
 import { LoginResponse } from '../../models/login/login-response.interface';
 
 @Injectable()
@@ -33,10 +33,23 @@ export class AuthProvider {
     return this.afAuth.authState;
   }
 
-  async signInWithEmailAndPassword(account: Account) {
+  async createUserWithEmailAndPassword(profile: Profile) {
     try {
       return <LoginResponse> {
-        result: await this.afAuth.auth.signInWithEmailAndPassword(account.email, account.password)
+        result: await this.afAuth.auth.createUserWithEmailAndPassword(profile.email, profile.password)
+      }
+
+    } catch(e) {
+      return <LoginResponse> {
+        error: e
+      }
+    }
+  }
+
+  async signInWithEmailAndPassword(profile: Profile) {
+    try {
+      return <LoginResponse> {
+        result: await this.afAuth.auth.signInWithEmailAndPassword(profile.email, profile.password)
       };
     } catch(e) {
       return <LoginResponse> {

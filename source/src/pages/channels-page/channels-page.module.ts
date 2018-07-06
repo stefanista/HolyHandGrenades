@@ -8,9 +8,6 @@ import { ChannelsPage } from './channels-page';
   ],
   imports: [
     IonicPageModule.forChild(ChannelsPage),
-  ],
-  exports: [
-    ChannelsPage
   ]
 })
 export class ChannelsPageModule {}

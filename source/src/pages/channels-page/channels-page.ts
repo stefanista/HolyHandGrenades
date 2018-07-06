@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ChatService } from '../../providers/chat.service';
-import { Observable } from 'rxjs/Observable';
 import { Channel } from '../../models/channel/channel.interface';
 import { AngularFireList } from 'angularfire2/database';
 
@@ -12,7 +11,7 @@ import { AngularFireList } from 'angularfire2/database';
 })
 export class ChannelsPage {
 
-  channelList: AngularFireList<Channel>
+  channelList: AngularFireList<Channel>;
   
   constructor(private chat: ChatService, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
   }

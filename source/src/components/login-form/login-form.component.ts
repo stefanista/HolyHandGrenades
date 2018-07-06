@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { Account } from '../../models/account/account.interface';
+import { Profile } from '../../models/profile/profile.interface';
 import { LoginResponse } from '../../models/login/login-response.interface';
 import { AuthProvider } from '../../providers/auth/auth';
 
@@ -11,7 +11,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class LoginFormComponent {
 
-  account = {} as Account;
+  profile = {} as Profile;
   @Output() loginStatus: EventEmitter<LoginResponse>;
 
   constructor(private auth: AuthProvider, private navCtrl: NavController){
@@ -19,7 +19,7 @@ export class LoginFormComponent {
   }
 
   async login() {
-    const loginResponse = await this.auth.signInWithEmailAndPassword(this.account);
+    const loginResponse = await this.auth.signInWithEmailAndPassword(this.profile);
     this.loginStatus.emit(loginResponse);
     //const result = await this.auth.signInWithEmailAndPassword(this.account)
     // try {

@@ -9,6 +9,9 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { DataService } from '../providers/data.service';
+import { EditProfilePage } from '../pages/edit-profile-page/edit-profile-page';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -26,7 +29,8 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar,
-    public splashScreen: SplashScreen, public afAuth: AngularFireAuth) {
+    public splashScreen: SplashScreen, public afAuth: AngularFireAuth,
+    private data: DataService) {
 
     // here we determine, if user is aunthenticated/have data in our db
     // thats we make before platform ready
@@ -37,7 +41,12 @@ export class MyApp {
 
       } else {
         // page for auth. users
+        if(!this.data.getProfile(user)) {
+          this.rootPage = EditProfilePage;
+        }
+        else {
         this.rootPage = TabsPage;
+        }
         this.userData = {
           loggedIn: true,
           uid: user.uid,

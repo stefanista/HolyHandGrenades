@@ -27,7 +27,6 @@ import { SurveysPage } from '../pages/surveys/surveys';
 import { ChatPage } from '../pages/chat/chat';
 import { ChannelsPage } from '../pages/channels-page/channels-page';
 
-
 // User Auth Pages
 import { WelcomePage } from '../pages/welcome/welcome';
 import { LoginPage } from '../pages/login/login';

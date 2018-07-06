@@ -3,7 +3,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label floating>Email Address</ion-label>
-        <ion-input [(ngModel)]="account.email" type="email" name="email" #email="ngModel" required pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"></ion-input>
+        <ion-input [(ngModel)]="profile.email" type="email" name="email" #email="ngModel" required pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"></ion-input>
       </ion-item>
 
       <div padding *ngIf="email.invalid && email.dirty">
@@ -12,7 +12,16 @@
 
       <ion-item>
         <ion-label floating>Password</ion-label>
-        <ion-input [(ngModel)]="account.password" name="password" type="password" #password="ngModel" required pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,50})$"></ion-input>
+        <ion-input [(ngModel)]="profile.password" name="password" type="password" #password="ngModel" required pattern="(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,50})$"></ion-input>
+      </ion-item>
+
+      <div padding *ngIf="password.invalid && password.dirty">
+        <span class="global__input-error">Password must be at least 6 characters and have one uppercase letter.</span>
+      </div>
+
+      <ion-item>
+        <ion-label floating>First Name</ion-label>
+        <ion-input [(ngModel)]="profile.firstName" name="firstName" type="text"></ion-input>
       </ion-item>
 
       <div padding *ngIf="password.invalid && password.dirty">

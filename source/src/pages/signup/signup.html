@@ -12,7 +12,6 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
   <form [formGroup]="emailSignUpForm" (ngSubmit)="emailSignUpFormSubmit()">
@@ -26,8 +25,22 @@
        <ion-input type="password" formControlName="password" clearInput></ion-input>
      </ion-item>
 
-     <button ion-button item-right type="submit" [disabled]="!emailSignUpForm.valid" block>Sign Up</button>
+     <ion-item>
+       <ion-label>First Name</ion-label>
+       <ion-input type="text" formControlName="firstName" name="firstName" required [(ngModel)]="profile.firstName" clearInput></ion-input>
+     </ion-item>
 
+     <ion-item>
+      <ion-label>Last Name</ion-label>
+      <ion-input type="text" formControlName="lastName" name="lastName" required [(ngModel)]="profile.lastName" clearInput></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Birthday</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dateOfBirth" required [(ngModel)]="profile.dateOfBirth" clearInput></ion-datetime>
+    </ion-item>
+
+     <button ion-button item-right type="submit" [disabled]="!emailSignUpForm.valid" block>Sign Up</button>
 
    </form>
 
