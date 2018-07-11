@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ChatService } from '../../providers/chat.service';
 import { Channel } from '../../models/channel/channel.interface';
-import { AngularFirestoreCollection } from 'angularfire2/firestore';
+import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 
 
 @IonicPage()
@@ -12,7 +12,7 @@ import { AngularFirestoreCollection } from 'angularfire2/firestore';
 })
 export class ChannelsPage {
 
-  channelList: AngularFirestoreCollection<Channel>;
+  channelList: FirebaseListObservable<Channel[]>;
   
   constructor(private chat: ChatService, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
   }
