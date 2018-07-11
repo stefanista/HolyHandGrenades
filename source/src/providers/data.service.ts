@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireObject, AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { User } from 'firebase/app';
 import { database } from 'firebase';
 import "rxjs/add/operator/take";
@@ -13,15 +14,15 @@ import { AuthProvider } from './auth/auth';
 @Injectable()
 export class DataService {
 
-  profileObject: AngularFireObject<Profile>
-  profileList: AngularFireList<Profile>
+  profileCollection: AngularFirestoreCollection<Profile>;
+  profileObs$: Observable<Profile[]>;
 
-  constructor(private authService: AuthProvider, private database: AngularFireDatabase) {
+  constructor(private authService: AuthProvider, private afs: AngularFirestore) {
   }
 
   searchUser(firstName: string) {
-    return this.database.list('/profiles', ref => {
-      let q = ref.limitToLast(25).orderByChild('firstname').equalTo(firstName);
+    return this.afs.collection('/profiles', ref => {
+      let q = ref.where('firstName', '==', firstName);
       return q;
     })
   }
@@ -29,20 +30,24 @@ export class DataService {
   getAuthenticatedUserProfile() {
     return this.authService.getAuthenticatedUser()
       .map(user => user.uid)
-      .mergeMap(authId => this.database.object(`profiles/${authId}`).valueChanges())
+      .mergeMap(authId => this.afs.doc(`profiles/${authId}`).valueChanges())
       .take(1)
   }
 
   getProfile(user: User){
-    this.profileObject = this.database.object(`/profiles/${user.uid}`);
+    const profileDoc: AngularFirestoreDocument<any> = this.afs.doc(`/profiles/${user.uid}`);
 
-    return this.profileObject.valueChanges();
+    return profileDoc.valueChanges();
   }
 
   async saveProfile(user: User, profile: Profile) {
-    this.profileObject = this.database.object(`/profiles/${user.uid}`);
+    const profileDoc: AngularFirestoreDocument<any> = this.afs.collection('/profiles').doc(`${user.uid}`);
+    const profileObs$: Observable<any> = this.afs.collection('/profiles').doc(`${user.uid}`).valueChanges();
+
     try {
-      await this.profileObject.set(profile);
+      profileDoc.set(profile, {merge: true});
+      await profileObs$;
+      console.log("Successful");
       return true;
     } catch(e) {
       console.error(e);
@@ -62,8 +67,8 @@ export class DataService {
     }
   }
 
-  getOnlineUsers(): AngularFireList<Profile[]> {
-    return this.database.list(`online-users`);
+  getOnlineUsers(): AngularFirestoreCollection<Profile[]> {
+    return this.afs.collection(`online-users`);
   }
 
 }

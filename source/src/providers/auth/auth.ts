@@ -29,7 +29,7 @@ export class AuthProvider {
     return this.afAuth.auth.signOut();
   }
 
-  getAuthenticatedUser(){
+  getAuthenticatedUser() {
     return this.afAuth.authState;
   }
 

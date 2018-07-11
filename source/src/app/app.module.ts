@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 // AngularFire + Firebase
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 
@@ -44,7 +44,7 @@ export const firebaseConfig = {
   authDomain: "umkc-propel-program.firebaseapp.com",
   databaseURL: "https://umkc-propel-program.firebaseio.com",
   projectId: "umkc-propel-program",
-  storageBucket: "",
+  storageBucket: "umkc-propel-program.appspot.com",
   messagingSenderId: "210198393063"
 };
 
@@ -68,7 +68,7 @@ export const firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
+    AngularFirestoreModule,
     AngularFireAuthModule,
     BrowserAnimationsModule
   ],
@@ -89,7 +89,7 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
-    AngularFireDatabase,
+    AngularFirestoreModule,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     DataService,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DataService } from '../../providers/data.service';
-import { AngularFireList } from 'angularfire2/database';
+import { AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Profile } from '../../models/profile/profile.interface';
 
 @Component({
@@ -11,7 +11,7 @@ import { Profile } from '../../models/profile/profile.interface';
 
 export class OnlineUsersComponent implements OnInit {
 
-  userList: AngularFireList<Profile[]>
+  userList: AngularFirestoreCollection<Profile[]>
 
   constructor(private navCtrl: NavController, private data: DataService) {
 

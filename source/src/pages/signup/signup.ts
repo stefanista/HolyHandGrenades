@@ -45,7 +45,7 @@ export class SignupPage {
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
       firstName: ['', Validators.compose([Validators.minLength(1), Validators.required])],
       lastName: ['', Validators.compose([Validators.minLength(1), Validators.required])],
-      dateOfBirth: ['', Validators.compose([Validators.required])]
+      dateOfBirth: [Date, Validators.compose([Validators.required])]
     });
     
     this.saveProfileResult = new EventEmitter<Boolean>();
@@ -71,18 +71,18 @@ export class SignupPage {
         .then(() => {
           this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
             this.authenticatedUser = user;
+
+            this.profile.firstName = this.emailSignUpForm.value.firstName;
+            this.profile.lastName = this.emailSignUpForm.value.lastName;
+            this.profile.dateOfBirth = this.emailSignUpForm.value.dateOfBirth;
+
+            this.saveProfile();
+
+            // showing succesfull message
+            this.createToast('Signed up with email: ' + this.emailSignUpForm.value.email).present();
+            // closing dialog
+            this.viewCtrl.dismiss();
           });
-
-          this.profile.firstName = this.emailSignUpForm.value.firstName;
-          this.profile.lastName = this.emailSignUpForm.value.lastName;
-          this.profile.dateOfBirth = this.emailSignUpForm.value.dateOfBirth;
-
-          this.saveProfile();
-
-          // showing succesfull message
-          this.createToast('Signed up with email: ' + this.emailSignUpForm.value.email).present();
-          // closing dialog
-          this.viewCtrl.dismiss();
         },
         /**
          * Handle Authentication errors

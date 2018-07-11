@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MESSAGE_LIST } from '../../mocks/messages/messages';
 import { Message } from '../../models/messages/message.interface';
 
 @IonicPage()
@@ -10,7 +9,7 @@ import { Message } from '../../models/messages/message.interface';
 })
 export class ChatPage {
 
-  messageList : Message[] = MESSAGE_LIST;
+  messageList : Message[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
