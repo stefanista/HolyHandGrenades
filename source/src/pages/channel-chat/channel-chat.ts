@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Channel } from '../../models/channel/channel.interface';
 import { ChannelMessage } from '../../models/channel/channel-message.interface';
 import { ChatService } from '../../providers/chat.service';
-import { AngularFirestoreCollection } from 'angularfire2/firestore';
+import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 
 
 @IonicPage()
@@ -15,7 +15,7 @@ export class ChannelChat {
 
   channel: Channel;
 
-  channelMessages: AngularFirestoreCollection<{}>;
+  channelMessages: FirebaseListObservable<{}>;
 
   constructor(private chat: ChatService, public navCtrl: NavController, public navParams: NavParams) {
   }

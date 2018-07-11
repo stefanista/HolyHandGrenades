@@ -1,4 +1,4 @@
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
  import "rxjs/add/operator/mergeMap";
@@ -13,36 +13,36 @@ import { AuthProvider } from './auth/auth';
 @Injectable()
 
 export class ChatService {
-  constructor(private auth: AuthProvider, private afs: AngularFirestore) {
+  constructor(private auth: AuthProvider, private database: AngularFireDatabase) {
 
   }
   addChannel(channelName: string) {
-    this.afs.collection(`channel-names`).add({ name: channelName });
+    this.database.list(`channel-names`).push({ name: channelName });
   }
 
-  getChannelListRef(): AngularFirestoreCollection<Channel> {
-    return this.afs.collection(`channel-names`);
+  getChannelListRef(): FirebaseListObservable<Channel[]> {
+    return this.database.list(`channel-names`);
   }
 
   getChannelChatRef(channelKey: string) {
-    return this.afs.collection(`channels/${channelKey}`);
+    return this.database.list(`channels/${channelKey}`);
   }
 
   async sendChannelChatMessage(channelKey: string, message: ChannelMessage){
-     await this.afs.collection(`/channels/${channelKey}`).add(message);
+     await this.database.list(`/channels/${channelKey}`).push(message);
   }
 
   async sendChat(message: Message) {
-    await this.afs.collection(`/messages`).add(message);
+    await this.database.list(`/messages`).push(message);
   }
 
   getChats(userTwoId: string) {
     return this.auth.getAuthenticatedUser()
       .map(auth => auth.uid)
-      .mergeMap(uid => this.afs.collection(`/user-messages/${uid}/${userTwoId}`).valueChanges())
+      .mergeMap(uid => this.database.list(`/user-messages/${uid}/${userTwoId}`))
       .mergeMap(chats => {
         return Observable.forkJoin(
-          chats.map(chat => this.afs.collection(`/messages/${chat}`).valueChanges().first()),
+          chats.map(chat => this.database.object(`/messages/${chat.$key}`).first()),
           (...vals: Message[]) => {
             console.log(vals);
             return vals;
@@ -51,14 +51,14 @@ export class ChatService {
       })
   }
 
-  getLastMessagesForUser() {
+  getLastMessagesForUser(): Observable<Message[]> {
     return this.auth.getAuthenticatedUser()
       .map(auth => auth.uid)
-      .mergeMap(authId => this.afs.collection(`/last-messages/${authId}`).valueChanges())
+      .mergeMap(authId => this.database.list(`/last-messages/${authId}`))
       .mergeMap(messageIds => {
         return Observable.forkJoin(
           messageIds.map(message => {
-            return this.afs.collection(`/messages/${message}`).valueChanges()
+            return this.database.object(`/messages/${message.key}`)
               .first()
           }),
           (...values) => {

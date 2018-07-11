@@ -5,6 +5,7 @@ import { ChatPage } from '../chat/chat';
 import { ChannelsPage } from '../channels-page/channels-page';
 import { SurveysPage } from '../surveys/surveys';
 import { ContactPage } from '../contact/contact';
+import { ProfilePage } from '../profile-page/profile-page'
 
 /**
  * Generated class for the TabsPage tabs.
@@ -25,6 +26,7 @@ export class TabsPage {
   channelsRoot = ChannelsPage
   surveysRoot = SurveysPage
   contactRoot = ContactPage
+  profileRoot = ProfilePage
 
 
   constructor(public navCtrl: NavController) {}

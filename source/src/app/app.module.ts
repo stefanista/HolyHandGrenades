@@ -5,11 +5,12 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-// AngularFire + Firebase
+// AngularFire + Firebase + Firestore
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 
 // Pages
 import { MyApp } from './app.component';
@@ -18,7 +19,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { ContactPage } from '../pages/contact/contact';
 
 // Profile Pages
-import { EditProfilePage } from '../pages/edit-profile-page/edit-profile-page';
+import { ProfilePage } from '../pages/profile-page/profile-page'
 
 // Survey Pages
 import { SurveysPage } from '../pages/surveys/surveys';
@@ -33,6 +34,10 @@ import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 
 // Modules
+import { TabsPageModule } from './../pages/tabs/tabs.module';
+import { EditProfilePageModule } from './../pages/edit-profile-page/edit-profile-page.module';
+
+
 // import { IonicSwipeAllModule } from 'ionic-swipe-all';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TextareaAutoresizeDirective } from '../directives/textarea-autoresize/textarea-autoresize';
@@ -56,12 +61,11 @@ export const firebaseConfig = {
     WelcomePage,
     LoginPage,
     SignupPage,
-    EditProfilePage,
+    ProfilePage,
     SurveysPage,
     ContactPage,
     ChatPage,
     ChannelsPage,
-    TabsPage,
     TextareaAutoresizeDirective
   ],
   imports: [
@@ -70,7 +74,10 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    BrowserAnimationsModule
+    AngularFireDatabaseModule,
+    BrowserAnimationsModule,
+    EditProfilePageModule,
+    TabsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -79,7 +86,7 @@ export const firebaseConfig = {
     WelcomePage,
     LoginPage,
     SignupPage,
-    EditProfilePage,
+    ProfilePage,
     SurveysPage,
     ContactPage,
     ChatPage,
