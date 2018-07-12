@@ -26,12 +26,31 @@ export class AuthProvider {
     .subscribe();
   }
 
+  userEmailVerified() {
+    return this.afAuth.auth.currentUser.emailVerified;
+  }
+
+  sendEmailVerification() {
+    this.afAuth.authState.subscribe(user => {
+        user.sendEmailVerification()
+        .then(() => {
+          console.log('email sent');
+        })
+      });
+  }
+
   signInUser(newEmail: string, newPassword: string): Promise<void> {
     return this.afAuth.auth.signInWithEmailAndPassword(newEmail, newPassword);
   }
 
   signUpUser(newEmail: string, newPassword: string): Promise<void> {
-    return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword);
+    return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword)
+    .then((res) => {
+      this.sendEmailVerification()
+    })
+    .catch((err)=> {
+      console.log('Unable to signup user.')
+    });;
   }
 
   googleSignUp(): Promise<void> {

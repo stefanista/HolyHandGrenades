@@ -26,7 +26,6 @@ import { Profile } from '../../models/profile/profile.interface'
 })
 export class SignupPage {
 
-  private authenticatedUser$: Subscription;
   private authenticatedUser: User;
   public emailSignUpForm: FormGroup;
 
@@ -69,7 +68,7 @@ export class SignupPage {
       // if the form is valid, we continue with validation
       this.auth.signUpUser(this.emailSignUpForm.value.email, this.emailSignUpForm.value.password)
         .then(() => {
-          this.authenticatedUser$ = this.auth.getAuthenticatedUser().subscribe((user: User) => {
+          this.auth.getAuthenticatedUser().subscribe((user: User) => {
             this.authenticatedUser = user;
 
             this.profile.firstName = this.emailSignUpForm.value.firstName;

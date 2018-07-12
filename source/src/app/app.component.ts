@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -10,7 +10,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { DataService } from '../providers/data.service';
-import { EditProfilePage } from '../pages/edit-profile-page/edit-profile-page';
 
 @Component({
   templateUrl: 'app.html'
@@ -30,30 +29,33 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar,
     public splashScreen: SplashScreen, public afAuth: AngularFireAuth,
-    private data: DataService) {
+    private data: DataService, private alertCtrl: AlertController) {
 
-    // here we determine, if user is aunthenticated/have data in our db
-    // thats we make before platform ready
+    // here we determine, if user is authenticated/have data in our db
+    // that we make before platform ready
     afAuth.authState.subscribe(user => {
       if (!user) {
         // you can modify here the page for non. auth users
         this.rootPage = WelcomePage;
-
-      } else {
+      }
+      else {
         // page for auth. users
-        if(!this.data.getProfile(user)) {
-          this.rootPage = EditProfilePage;
-        }
-        else {
-        this.rootPage = TabsPage;
-        }
-        this.userData = {
-          loggedIn: true,
-          uid: user.uid,
-          displayName: user.displayName,
-          photoURL: user.photoURL || 'assets/imgs/default-user-image.png'
-        };
+        if(this.data.getProfile(user)) {
+          if (this.afAuth.auth.currentUser.emailVerified) {
+            this.rootPage = TabsPage;
 
+            this.userData = {
+              loggedIn: true,
+              uid: user.uid,
+              displayName: user.displayName,
+              photoURL: user.photoURL || 'assets/imgs/default-user-image.png'
+            };
+          }
+          else {
+            this.unverifiedEmailAlert();
+            this.rootPage = WelcomePage;
+          }
+        }
       }
     });
 
@@ -89,5 +91,14 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  unverifiedEmailAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Unverified Email',
+      subTitle: 'Please verify your email before proceeding.',
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }
