@@ -5,6 +5,10 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { File } from '@ionic-native/file';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
+
 // AngularFire + Firebase + Firestore
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -24,9 +28,19 @@ import { ProfilePage } from '../pages/profile-page/profile-page'
 // Survey Pages
 import { SurveysPage } from '../pages/surveys/surveys';
 
-// Chat Pages
-import { ChatPage } from '../pages/chat/chat';
+// Channel Pages
 import { ChannelsPage } from '../pages/channels-page/channels-page';
+
+// Chat Pages
+import { ChatsPage } from '../pages/chatPages/chats/chats';
+import { GroupsPage } from '../pages/chatPages/groups/groups';
+
+// Chat Providers
+import { ImghandlerProvider } from '../providers/imghandler/imghandler';
+import { RequestsProvider } from '../providers/requests/requests';
+import { ChatProvider } from '../providers/chat/chat';
+import { GroupsProvider } from '../providers/groups/groups';
+import { UserProvider } from '../providers/user/user';
 
 // User Auth Pages
 import { WelcomePage } from '../pages/welcome/welcome';
@@ -36,7 +50,6 @@ import { SignupPage } from '../pages/signup/signup';
 // Modules
 import { TabsPageModule } from './../pages/tabs/tabs.module';
 import { EditProfilePageModule } from './../pages/edit-profile-page/edit-profile-page.module';
-
 
 // import { IonicSwipeAllModule } from 'ionic-swipe-all';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -63,8 +76,9 @@ export const firebaseConfig = {
     SignupPage,
     ProfilePage,
     SurveysPage,
+    ChatsPage,
+    GroupsPage,
     ContactPage,
-    ChatPage,
     ChannelsPage,
     TextareaAutoresizeDirective
   ],
@@ -88,19 +102,28 @@ export const firebaseConfig = {
     SignupPage,
     ProfilePage,
     SurveysPage,
+    ChatsPage,
+    GroupsPage,
     ContactPage,
-    ChatPage,
     ChannelsPage,
     TabsPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    File,
+    FilePath,
+    FileChooser,
     AngularFirestoreModule,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     DataService,
-    ChatService
+    ChatService,
+    ImghandlerProvider,
+    UserProvider,
+    RequestsProvider,
+    ChatProvider,
+    GroupsProvider
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

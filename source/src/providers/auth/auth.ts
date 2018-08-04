@@ -9,7 +9,7 @@ import 'rxjs/add/operator/do'
 
 @Injectable()
 export class AuthProvider {
-
+  firedata = firebase.database().ref('/users');
   userId: string; // current user uid
 
   constructor(public afAuth: AngularFireAuth, private db: AngularFireDatabase) {
@@ -79,6 +79,23 @@ export class AuthProvider {
       return <LoginResponse> {
         error: e
       }
+    }
+  }
+
+  async createUserProfile(profile: Profile) {
+    try {
+      return this.afAuth.auth.currentUser.updateProfile({
+        displayName: profile.firstName + ' ' + profile.lastName,
+        photoURL: 'https://firebasestorage.googleapis.com/v0/b/umkc-propel-program.appspot.com/o/DefaulProfilePic.png?alt=media&token=21d5bf61-5d6d-43fc-b403-613277345d44'
+      }).then(() => {
+        this.firedata.child(this.afAuth.auth.currentUser.uid).set({
+          uid: this.afAuth.auth.currentUser.uid,
+          displayName: profile.firstName + ' ' + profile.lastName,
+          photoURL: 'https://firebasestorage.googleapis.com/v0/b/umkc-propel-program.appspot.com/o/DefaulProfilePic.png?alt=media&token=21d5bf61-5d6d-43fc-b403-613277345d44'
+        })
+      })
+    } catch(e) {
+      return e;
     }
   }
 

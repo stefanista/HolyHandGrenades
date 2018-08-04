@@ -99,6 +99,9 @@ export class SignupPage {
   async saveProfile() {
     if (this.authenticatedUser) {
       this.profile.email = this.authenticatedUser.email;
+
+      this.auth.createUserProfile(this.profile);
+
       const result = await this.data.saveProfile(this.authenticatedUser, this.profile);
       this.saveProfileResult.emit(result);
     }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { ChatPage } from '../chat/chat';
+import { ChatsPage } from '../chatPages/chats/chats';
+import { GroupsPage } from '../chatPages/groups/groups';
 import { ChannelsPage } from '../channels-page/channels-page';
 import { SurveysPage } from '../surveys/surveys';
 import { ContactPage } from '../contact/contact';
@@ -22,7 +23,8 @@ import { ProfilePage } from '../profile-page/profile-page'
 export class TabsPage {
 
   homeRoot = HomePage
-  chatRoot = ChatPage
+  chatRoot = ChatsPage
+  groupRoot = GroupsPage
   channelsRoot = ChannelsPage
   surveysRoot = SurveysPage
   contactRoot = ContactPage
