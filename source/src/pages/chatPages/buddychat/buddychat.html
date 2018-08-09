@@ -23,7 +23,7 @@
     <div *ngFor = "let item of allmessages; let i = index" text-wrap
     class = "message"
     [class.left]=" item.sentby === buddy.uid "
-    [class.right]=" item.sentby === user.uid ">>
+    [class.right]=" item.sentby === user.uid ">
       <ion-avatar class="user-img">
         <img src="{{user.photoURL}}">
       </ion-avatar>
@@ -47,7 +47,7 @@
       </button>
     </ion-buttons>
   </ion-toolbar>    
-</ion-footer>z
+</ion-footer>
 
 <!-- 
   <ion-header>
