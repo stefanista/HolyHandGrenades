@@ -17,14 +17,17 @@ import firebase from 'firebase';
 export class BuddychatPage {
   @ViewChild('content') content: Content;
   buddy: any;
+  user: any;
   newmessage;
   allmessages = [];
   photoURL;
   imgornot;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public chatservice: ChatProvider,
     public events: Events, public zone: NgZone, public loadingCtrl: LoadingController,
     public imgstore: ImghandlerProvider) {
     this.buddy = this.chatservice.buddy;
+    this.user = firebase.auth().currentUser;
     this.photoURL = firebase.auth().currentUser.photoURL;
     this.scrollto();
     this.events.subscribe('newmessage', () => {
@@ -45,6 +48,10 @@ export class BuddychatPage {
   }
 
   addmessage() {
+    // If user's message is empty string, just return.
+    if (this.newmessage == '') {
+      return
+    }
     this.chatservice.addnewmessage(this.newmessage).then(() => {
       this.content.scrollToBottom();
       this.newmessage = '';

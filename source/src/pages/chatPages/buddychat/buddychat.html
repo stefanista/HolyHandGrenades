@@ -19,34 +19,87 @@
 
 
 <ion-content #content>
-<div class = "chatwindow">
-  <ion-list no-lines>
-    <ion-item *ngFor = "let item of allmessages; let i = index" text-wrap>
-      <ion-avatar item-left *ngIf="item.sentby === buddy.uid">
-        <img src="{{buddy.photoURL}}">
+<div class = "message-wrap">
+    <div *ngFor = "let item of allmessages; let i = index" text-wrap
+    class = "message"
+    [class.left]=" item.sentby === buddy.uid "
+    [class.right]=" item.sentby === user.uid ">>
+      <ion-avatar class="user-img">
+        <img src="{{user.photoURL}}">
       </ion-avatar>
-      <div class="bubble me" *ngIf="item.sentby === buddy.uid">
-        <h3 *ngIf="!imgornot[i]">{{item.message}}</h3>
-        <img src="{{item.message}}" *ngIf="imgornot[i]">
-      </div>
-      <ion-avatar item-right *ngIf="item.sentby != buddy.uid">
-        <img src="{{photoURL}}">
-      </ion-avatar>
-      <div class="bubble you" *ngIf="item.sentby != buddy.uid">
-        <h3 *ngIf="!imgornot[i]">{{item.message}}</h3>
-        <img src="{{item.message}}" *ngIf="imgornot[i]">
-      </div>
-    </ion-item>
-  </ion-list>
+      <div class="msg-detail">
+          <div class="msg-info">
+          </div>
+          <div class="msg-content">
+            <span class="triangle"></span>
+            <p class="line-breaker ">{{item.message}}</p>
+          </div>
+        </div>
+  </div>
 </div>
 </ion-content>
-<ion-footer ion-fixed>    
+<ion-footer no-border>    
   <ion-toolbar class="no-border" color="white">        
-    <ion-input [(ngModel)]="newmessage" placeholder="Write your message ..."></ion-input>  
+    <ion-input [(ngModel)]="newmessage" (keyup.enter)="addmessage()" placeholder="Write your message ..."></ion-input>  
     <ion-buttons end>
       <button ion-button (click)="addmessage()">
         <ion-icon name="send" color="primary"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>    
+</ion-footer>z
+
+<!-- 
+  <ion-header>
+
+  <ion-navbar>
+    <ion-title>{{toUser.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <div class="message-wrap">
+
+    <div *ngFor="let msg of msgList"
+         class="message"
+         [class.left]=" msg.userId === toUser.id "
+         [class.right]=" msg.userId === user.id ">
+      <img class="user-img" [src]="msg.userAvatar" alt="" src="">
+      <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
+      <div class="msg-detail">
+        <div class="msg-info">
+          <p>
+            {{msg.userName}}&nbsp;&nbsp;&nbsp;{{msg.time | relativeTime}}</p>
+        </div>
+        <div class="msg-content">
+          <span class="triangle"></span>
+          <p class="line-breaker ">{{msg.message}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
+  <div class="input-wrap">
+    <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+      <ion-icon name="md-happy"></ion-icon>
+    </button>
+    <textarea #chat_input
+              placeholder="Text Input"
+              [(ngModel)]="editorMsg"
+              (keyup.enter)="sendMsg()"
+              (focusin)="onFocus()">
+    </textarea>
+    <button ion-button clear icon-only item-right (click)="sendMsg()">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+  </div>
+  <emoji-picker [(ngModel)]="editorMsg"></emoji-picker>
 </ion-footer>
+
+ -->

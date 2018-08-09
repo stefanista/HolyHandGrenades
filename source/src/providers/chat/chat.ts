@@ -26,11 +26,13 @@ export class ChatProvider {
       let promise = new Promise((resolve, reject) => {
         this.firebuddychats.child(firebase.auth().currentUser.uid).child(this.buddy.uid).push().set({
           sentby: firebase.auth().currentUser.uid,
+          displayName: firebase.auth().currentUser.displayName,
           message: msg,
           timestamp: firebase.database.ServerValue.TIMESTAMP
         }).then(() => {
           this.firebuddychats.child(this.buddy.uid).child(firebase.auth().currentUser.uid).push().set({
             sentby: firebase.auth().currentUser.uid,
+            displayName: firebase.auth().currentUser.displayName,
             message: msg,
             timestamp: firebase.database.ServerValue.TIMESTAMP
           }).then(() => {

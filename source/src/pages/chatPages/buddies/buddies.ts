@@ -22,14 +22,24 @@ export class BuddiesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public userservice: UserProvider, public alertCtrl: AlertController,
     public requestservice: RequestsProvider) {
-    this.userservice.getallusers().then((res: any) => {
-      this.filteredusers = res;
-      this.temparr = res;
-   })
+    this.userservice.getallusers().then((allUsers: any) => {
+      this.userservice.getUserFriends().then((friends: any) => {
+        this.temparr = this.findDifference(allUsers, friends);
+        this.temparr = this.temparr.filter(user => user.uid != firebase.auth().currentUser.uid);
+        this.filteredusers = this.temparr;
+      })
+    })
   }
 
   ionViewDidLoad() {
 
+  }
+
+  findDifference(array1, array2) {
+    // Return the difference of array1 to array2
+    // Used to obtain array of people the user is not friends with
+       return array1.filter(user => !array2.some(other => user.uid === other.uid)
+      );
   }
 
   searchuser(searchbar) {
@@ -50,26 +60,51 @@ export class BuddiesPage {
   sendreq(recipient) {
     this.newrequest.sender = firebase.auth().currentUser.uid;
     this.newrequest.recipient = recipient.uid;
-    if (this.newrequest.sender === this.newrequest.recipient)
-      alert('You are your friend. Always.');
-    else {
-      let successalert = this.alertCtrl.create({
-        title: 'Request sent',
-        subTitle: 'Your request was sent to ' + recipient.displayName,
-        buttons: ['ok']
-      });
-    
-      this.requestservice.sendrequest(this.newrequest).then((res: any) => {
-        if (res.success) {
-          successalert.present();
+    this.userservice.getUserRequests(recipient.uid).then((recipReqs: any) => {
+      this.userservice.getUserRequests(this.newrequest.sender).then((senderReqs: any) => {
+        if (senderReqs.findIndex(req => req.sender == this.newrequest.recipient) != -1) {
+          // Check to see if the intended recipient already sent a friend request to the intended sender
+          let duplicateAlert = this.alertCtrl.create({
+            title: 'Duplicate Request',
+            subTitle: recipient.displayName + " has sent you a request that you haven't responded to.",
+            buttons: ['OK']
+          });
+  
+          duplicateAlert.present();
           let sentuser = this.filteredusers.indexOf(recipient);
           this.filteredusers.splice(sentuser, 1);
         }
-      }).catch((err) => {
-        alert(err);
+        else if (recipReqs.findIndex(req => req.sender == this.newrequest.sender) != -1) {
+          // Check if sender already sent a request to the recipient
+          let duplicateAlert = this.alertCtrl.create({
+            title: 'Duplicate Request',
+            subTitle: 'You have already sent a request to ' + recipient.displayName,
+            buttons: ['OK']
+          });
+  
+          duplicateAlert.present();
+          let sentuser = this.filteredusers.indexOf(recipient);
+          this.filteredusers.splice(sentuser, 1);
+        }
+        else {
+          let successalert = this.alertCtrl.create({
+            title: 'Request sent',
+            subTitle: 'Your request was sent to ' + recipient.displayName,
+            buttons: ['OK']
+          });
+        
+          this.requestservice.sendrequest(this.newrequest).then((res: any) => {
+            if (res.success) {
+              successalert.present();
+              let sentuser = this.filteredusers.indexOf(recipient);
+              this.filteredusers.splice(sentuser, 1);
+            }
+          }).catch((err) => {
+            alert(err);
+          })
+        }
       })
-    }
-  }
-
+    })
+  };
 
 }

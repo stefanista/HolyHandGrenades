@@ -11,42 +11,10 @@ import firebase from 'firebase';
 @Injectable()
 export class UserProvider {
   firedata = firebase.database().ref('/users');
+  userFriendFireData = firebase.database().ref('/friends/' + this.afireauth.auth.currentUser.uid);
+  userRequestFireData = firebase.database().ref('/requests/');
+
   constructor(public afireauth: AngularFireAuth) {
-   
-  }
-
-  /*
-  Adds a new user to the system.
-  Called from - signup.ts
-  Inputs - The new user object containing the email, password and displayName.
-  Outputs - Promise.
-  
-   */
-
-  adduser(newuser) {
-    var promise = new Promise((resolve, reject) => {
-      this.afireauth.auth.createUserWithEmailAndPassword(newuser.email, newuser.password).then(() => {
-        this.afireauth.auth.currentUser.updateProfile({
-          displayName: newuser.displayName,
-          photoURL: 'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e'
-        }).then(() => {
-          this.firedata.child(this.afireauth.auth.currentUser.uid).set({
-            uid: this.afireauth.auth.currentUser.uid,
-            displayName: newuser.displayName,
-            photoURL: 'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e'
-          }).then(() => {
-            resolve({ success: true });
-            }).catch((err) => {
-              reject(err);
-          })
-          }).catch((err) => {
-            reject(err);
-        })
-      }).catch((err) => {
-        reject(err);
-      })
-    })
-    return promise;
   }
 
   updateimage(imageurl) {
@@ -120,5 +88,37 @@ export class UserProvider {
     return promise;
   }
 
+  getUserFriends() {
+    var promise = new Promise((resolve, reject) => {
+      this.userFriendFireData.orderByChild('uid').once('value', (snapshot) => {
+        let userFriends = snapshot.val();
+        let temparr = [];
+        for (var key in userFriends) {
+          temparr.push(userFriends[key]);
+        }
+        resolve(temparr);
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+    return promise;
+  }
+
+  getUserRequests(userID: string) {
+    var promise = new Promise((resolve, reject) => {
+      let userRequestFireData = firebase.database().ref('/requests/' + userID);
+      userRequestFireData.orderByChild('uid').once('value', (snapshot) => {
+        let userRequests = snapshot.val();
+        let temparr = [];
+        for (var key in userRequests) {
+          temparr.push(userRequests[key]);
+        }
+        resolve(temparr);
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+    return promise;
+  }
 
 }
