@@ -10,7 +10,6 @@
 - [Installation](#installation)
 - [Features](#features)
 - [Technologies](#technologies)
-- [Contributing](#contributing)
 - [Team](#team)
 
 ---
