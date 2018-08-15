@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, LoadingController, Content, Events } from 'ionic-angular';
 import { GroupsProvider } from '../../../providers/groups/groups';
 import { ImghandlerProvider } from '../../../providers/imghandler/imghandler';
@@ -18,6 +18,7 @@ import firebase from 'firebase';
 export class GroupchatPage {
   @ViewChild('content') content: Content;
   owner: boolean = false;
+  user: any;
   groupName;
   newmessage;
   allgroupmsgs;
@@ -25,9 +26,10 @@ export class GroupchatPage {
   photoURL;
   imgornot;
   constructor(public navCtrl: NavController, public navParams: NavParams, public groupservice: GroupsProvider,
-    public actionSheet: ActionSheetController, public events: Events, public imgstore: ImghandlerProvider, public loadingCtrl: LoadingController) {
+    public actionSheet: ActionSheetController, public zone: NgZone, public events: Events, public imgstore: ImghandlerProvider, public loadingCtrl: LoadingController) {
     this.alignuid = firebase.auth().currentUser.uid;
     this.photoURL = firebase.auth().currentUser.photoURL;
+    this.user = firebase.auth().currentUser;
     this.groupName = this.navParams.get('groupName');
     this.groupservice.getownership(this.groupName).then((res) => {
       if (res)
@@ -41,28 +43,13 @@ export class GroupchatPage {
       this.imgornot = [];
       this.allgroupmsgs = this.groupservice.groupmsgs;
       for (var key in this.allgroupmsgs) {
-        var d = new Date(this.allgroupmsgs[key].timestamp);
-        var hours = d.getHours();
-        var minutes = "0" + d.getMinutes();
-        var month = d.getMonth();
-        var da = d.getDate();
-
-        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        
-        var formattedTime = monthNames[month] + "-" + da + "-" + hours + ":" + minutes.substr(-2);
-
-        this.allgroupmsgs[key].timestamp = formattedTime;
-        if (this.allgroupmsgs[key].message.substring(0, 4) === 'http') {
+        if (this.allgroupmsgs[key].message.substring(0, 4) === 'http')
           this.imgornot.push(true);
-        }
-        else {
+        else
           this.imgornot.push(false);
-        }
       }
-      this.scrollto();
     })
-
+    this.scrollto();
   }
 
   ionViewDidLoad() {
@@ -171,6 +158,10 @@ export class GroupchatPage {
   }
 
   addgroupmsg() {
+    // If user's message is empty string, just return.
+    if (this.newmessage == '') {
+      return
+    }
     this.groupservice.addgroupmsg(this.newmessage).then(() => {
       this.scrollto();
       this.newmessage = '';

@@ -29,7 +29,6 @@ export class BuddychatPage {
     this.buddy = this.chatservice.buddy;
     this.user = firebase.auth().currentUser;
     this.photoURL = firebase.auth().currentUser.photoURL;
-    this.scrollto();
     this.events.subscribe('newmessage', () => {
       this.allmessages = [];
       this.imgornot = [];
@@ -41,10 +40,9 @@ export class BuddychatPage {
           else
             this.imgornot.push(false);
         }
-      })
-      
-      
+      })     
     })
+    this.scrollto();
   }
 
   addmessage() {

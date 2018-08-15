@@ -22,19 +22,19 @@
 <div class = "message-wrap">
     <div *ngFor = "let item of allmessages; let i = index" text-wrap
     class = "message"
-    [class.left]=" item.sentby === buddy.uid "
-    [class.right]=" item.sentby === user.uid ">
-      <ion-avatar class="user-img">
-        <img src="{{user.photoURL}}">
-      </ion-avatar>
+    [class.left]= "item.sentby === buddy.uid"
+    [class.right]= "item.sentby === user.uid">
+      <img class = "user-img" src="{{user.photoURL}}">
       <div class="msg-detail">
-          <div class="msg-info">
+          <div class="msg-info" >
+              <p>{{item.displayName}}</p>
+              <p>{{item.timestamp | date:"MMM dd yyyy hh:mm a"}}</p>
           </div>
           <div class="msg-content">
             <span class="triangle"></span>
             <p class="line-breaker ">{{item.message}}</p>
           </div>
-        </div>
+      </div>
   </div>
 </div>
 </ion-content>
