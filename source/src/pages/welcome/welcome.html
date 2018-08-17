@@ -1,15 +1,33 @@
-<ion-content scroll="false">
-  <div class="splash-bg"></div>
-  <div class="splash-info">
-    <div class="splash-logo"></div>
-    <div class="splash-intro"></div>
-  </div>
 
-  <div padding text-center>
-    <button ion-button full large round color="primary" (click)="login()" >Login</button>
-    <button ion-button style="width: 85%" round color="secondary" (click)="signup()" >Sign Up</button>
-  </div>
+  <ion-grid id="background" padding>
+    <ion-row class="flex1">
+      <ion-col col-12>
+        <h1 id="titleText"> UMKC Propel App </h1>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row class="flex3">
+      <ion-col col-12>
+        <p id="subtitleText">
+          Welcome. <br>
+          Login or Signup to get started.
+        </p>
+      </ion-col> 
+    </ion-row>
+    
+    <ion-row class="flex1">
+      <ion-col col-12>
+        <ion-row>
+          <ion-col col-6>
+            <button ion-button block color="primary" (click)="signup()">Signup</button>
+          </ion-col>
+          <ion-col col-6>
+            <button ion-button block color="secondary" (click)="forgotPass()">Forgot Pass?</button>
+          </ion-col>
+        </ion-row>
 
-  <button ion-button round color="primary" clear (click)="forgotPass()" block>Forgot Password</button>
+        <button ion-button block color="primary" (click)="login()">Login</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-</ion-content>

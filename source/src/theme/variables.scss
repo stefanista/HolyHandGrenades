@@ -37,11 +37,16 @@ $menu-o: #e23602;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #387ef5,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
+  // primary:    #387ef5,
+  // secondary:  #32db64,
+  // danger:     #f53d3d,
+  // light:      #f4f4f4,
+  // dark:       #222,
+  primary:  rgba(31, 122, 140, 1),
+  secondary: rgba(191, 219, 247, 1),
+  danger:   rgba(222, 145, 81, 1),
+  light:    rgba(255, 255, 255, 1),
+  dark:     rgba(2, 43, 58, 1),
   menu-o: $menu-o,
   menu-o-t: transparentize($color: darken($color: $menu-o, $amount: 30%) , $amount: 0.15)
 );

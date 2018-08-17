@@ -21,7 +21,7 @@ export class GroupchatPage {
   user: any;
   groupName;
   newmessage;
-  allgroupmsgs;
+  allgroupmsgs = [];
   alignuid;
   photoURL;
   imgornot;
@@ -54,6 +54,10 @@ export class GroupchatPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GroupchatPage');
+  }
+
+  ionViewDidEnter() {
+    this.groupservice.getgroupmsgs(this.navParams.get('groupName'));
   }
 
   sendpicmsg() {
